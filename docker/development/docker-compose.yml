@@ -1,0 +1,43 @@
+services:
+  postgres:
+    container_name: postgres
+    image: "postgres:13-alpine"
+    volumes:
+      - ./postgres/data/db:/var/lib/postgres/data
+    environment:
+      - POSTGRES_DB=chat_backend
+      - POSTGRES_USER=chat_backend_user
+      - POSTGRES_PASSWORD=Test@1234
+
+  redis:
+    container_name: redis
+    image: "redis:5-alpine"
+    ports:
+      - "6379:6379"
+
+  backend:
+    container_name: backend
+    build: ./chat-backend
+    command: python manage.py runserver 0.0.0.0:8000 --settings=src.settings.dev
+    volumes:
+      - ./../chat-backend:/app
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./../chat-frontend
+      dockerfile: Dockerfile.development
+    volumes:
+      - './../chat-frontend:/app'
+    ports:
+      - 80:80
+    environment:
+      # Enables a polling mechanism via chokidar (which wraps fs.watch, fs.watchFile, and fsevents) so that hot-reloading will work.
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
