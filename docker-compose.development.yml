@@ -1,0 +1,42 @@
+services:
+  postgres:
+    container_name: postgres
+    restart: always
+    image: "postgres:13-alpine"
+    environment:
+      - POSTGRES_DB=chat_backend
+      - POSTGRES_USER=chat_backend_user
+      - POSTGRES_PASSWORD=Test@1234
+
+  redis:
+    container_name: redis
+    restart: always
+    image: "redis:5-alpine"
+    ports:
+      - "6379:6379"
+
+  backend:
+    container_name: backend
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.development
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      DJANGO_SETTINGS_MODULE: src.settings.development
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - redis
+
+  frontend:
+    container_name: frontend
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.development
+    ports:
+      - 80:80
+    depends_on:
+      - backend
