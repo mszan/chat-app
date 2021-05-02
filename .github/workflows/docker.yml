@@ -1,18 +1,39 @@
 
-name: Docker CI
+name: CI
 
 on:
   push:
     branches: [ master ]
 
 jobs:
-  build:
+  tests:
+    name: Local tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: ${{ secrets.REPO_TOKEN }}
 
-      - name: Docker compose build
+      - name: Docker compose BUILD
         run: docker-compose --file docker-compose.production.yml build --no-cache
 
-      - name: Docker compose up
+      - name: Docker compose UP
         run: docker-compose --file docker-compose.production.yml up --force-recreate -d
+
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Execute remote SSH commands
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRODUCTION_VPS_HOST }}
+          username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
+          key: ${{ secrets.PRODUCTION_VPS_KEY }}
+          script: |
+            whoami
+            pwd
