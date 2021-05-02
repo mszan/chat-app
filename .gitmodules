@@ -1,6 +1,6 @@
 [submodule "chat-frontend"]
 	path = frontend
-	url = https://github.com/mszan/chat-frontend
+	url = git@github.com:mszan/chat-frontend
 [submodule "chat-backend"]
 	path = backend
-	url = https://github.com/mszan/chat-backend
+	url = git@github.com:mszan/chat-backend
