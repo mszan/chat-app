@@ -35,5 +35,10 @@ jobs:
           username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
           key: ${{ secrets.PRODUCTION_VPS_KEY }}
           script: |
-            whoami
-            pwd
+            docker stop $(docker ps -a -q)
+            docker system prune --force
+            sudo rm chat-app -r
+            git clone --recurse-submodules -j8 git@github.com:mszan/chat-app.git
+            cd chat-app
+            docker-compose --file docker-compose.production.yml build --no-cache
+            docker-compose --file docker-compose.production.yml up --force-recreate -d
