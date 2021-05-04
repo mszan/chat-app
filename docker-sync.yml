@@ -1,0 +1,12 @@
+version: "2"
+syncs:
+  postgres-files:
+    src: './postgres/data'
+
+  backend-files:
+    src: './backend'
+    sync_excludes: ['.gitignore', '.github', '.idea', 'Dockerfile.*', '.dockerignore', 'venv']
+
+  frontend-files:
+    src: './frontend'
+    sync_excludes: [ '.gitignore', '.github', '.idea', 'Dockerfile.*', '.dockerignore', 'node_modules' ]
