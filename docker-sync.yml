@@ -1,4 +1,9 @@
 version: "2"
+options:
+    compose-file-path: 'docker-compose.production.yml'
+    compose-dev-file-path: 'docker-compose.development.yml'
+    verbose: true
+
 syncs:
   postgres-files:
     src: './postgres/data'
