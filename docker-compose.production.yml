@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - postgres-files:/var/lib/postgresql/data:nocopy
+      - ./postgres/data:/var/lib/postgresql/data
     ports:
       - 5532:5432
     healthcheck:
@@ -54,7 +54,3 @@ services:
       - 3100:3000
     depends_on:
       - backend
-
-volumes:
-  postgres-files:
-    external: true
