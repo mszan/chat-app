@@ -7,7 +7,7 @@ services:
     volumes:
       - postgres-files:/var/lib/postgresql/data:nocopy
     ports:
-    - 5532:5432
+      - 5532:5432
     healthcheck:
       test: "pg_isready -U postgres"
       timeout: 5s

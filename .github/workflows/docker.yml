@@ -35,12 +35,13 @@ jobs:
           username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
           key: ${{ secrets.PRODUCTION_VPS_KEY }}
           script: |
+            mkdir chat-app
             cd chat-app
-            git clone --recurse-submodules -j8 git@github.com:mszan/chat-app.git git-sync
-            rsync -av git-sync app
+            git clone --recurse-submodules -j8 git@github.com:mszan/chat-app.git repo
+            rsync -av repo/ app
             cd app
             docker-compose --file docker-compose.production.yml stop
             docker system prune --force
             docker-compose --file docker-compose.production.yml build --no-cache
             docker-compose --file docker-compose.production.yml up --force-recreate -d
-            sudo rm ../git-sync -r
+            sudo rm ../repo -rcd
