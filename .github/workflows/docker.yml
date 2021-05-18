@@ -44,4 +44,4 @@ jobs:
             docker system prune --force
             docker-compose --file docker-compose.production.yml build --no-cache
             docker-compose --file docker-compose.production.yml up --force-recreate -d
-            sudo rm ../repo -rcd
+            sudo rm ../repo -rd
