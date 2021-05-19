@@ -7,7 +7,7 @@ services:
     volumes:
       - postgres-files:/var/lib/postgresql/data:nocopy
     ports:
-      - 5532:5432
+      - 4003:5432
     healthcheck:
       test: "pg_isready -U postgres"
       timeout: 5s
@@ -17,7 +17,7 @@ services:
     container_name: redis
     image: "redis:5-alpine"
     ports:
-      - 6479:6379
+      - 4002:6379
     healthcheck:
       test: "redis-cli ping"
       interval: 1s
@@ -35,7 +35,7 @@ services:
     volumes:
       - backend-files:/app:nocopy
     ports:
-      - 8100:8000
+      - 4001:8000
     depends_on:
       postgres:
         condition: service_healthy
@@ -51,8 +51,8 @@ services:
       - frontend-files:/app:nocopy
       - /app/node_modules
     ports:
-      - 3100:3000
-      - 9329:9229
+      - 4000:3000
+      - 4005:9229
     depends_on:
       - backend
 
