@@ -51,8 +51,8 @@ services:
       dockerfile: Dockerfile.production
     command: serve -s build -l 3000
     environment:
-      - REACT_APP_BACKEND_WEBSOCKET_URL=ws://chat-app.mszanowski.pl:4020/ws/
-      - REACT_APP_BACKEND_API_URL=https://chat-app.mszanowski.pl:4020/api
+      - REACT_APP_BACKEND_WEBSOCKET_URL=ws://chat-app.mszanowski.pl:8443/ws/
+      - REACT_APP_BACKEND_API_URL=https://chat-app.mszanowski.pl:8443/api
     ports:
       - 4000:3000
     depends_on:
