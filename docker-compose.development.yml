@@ -50,6 +50,9 @@ services:
     volumes:
       - frontend-files:/app:nocopy
       - /app/node_modules
+    environment:
+      - REACT_APP_BACKEND_WEBSOCKET_URL=ws://localhost:4001/ws/
+      - REACT_APP_BACKEND_API_URL=http://localhost:4001/api
     ports:
       - 4000:3000
       - 4005:9229

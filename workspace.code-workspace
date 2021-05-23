@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "SSH FS - hans",
+			"uri": "ssh://hans/"
+		},
+		{
+			"path": "../../../usr/local/etc/nginx"
+		}
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"server": "localhost",
+				"port": 5532,
+				"driver": "PostgreSQL",
+				"name": "docker-postgres",
+				"database": "postgres",
+				"username": "postgres",
+				"password": "postgres"
+			}
+		]
+	}
+}
