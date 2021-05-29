@@ -1,6 +1,6 @@
 services:
   postgres:
-    container_name: postgres
+    container_name: chat-app_postgres
     restart: always
     image: "postgres:13-alpine"
     environment:
@@ -15,7 +15,7 @@ services:
       retries: 3
 
   redis:
-    container_name: redis
+    container_name: chat-app_redis
     restart: always
     image: "redis:5-alpine"
     ports:
@@ -27,7 +27,7 @@ services:
       retries: 30
 
   backend:
-    container_name: backend
+    container_name: chat-app_backend
     restart: always
     build:
       context: ./backend
@@ -44,7 +44,7 @@ services:
         condition: service_healthy
 
   frontend:
-    container_name: frontend
+    container_name: chat-app_frontend
     restart: always
     build:
       context: ./frontend
