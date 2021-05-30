@@ -34,6 +34,7 @@ jobs:
           host: ${{ secrets.PRODUCTION_VPS_HOST }}
           username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
           key: ${{ secrets.PRODUCTION_VPS_KEY }}
+          command_timeout: 30m
           script: |
             cd chat-app
             git pull origin master
