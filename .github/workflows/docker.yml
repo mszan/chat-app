@@ -1,5 +1,5 @@
 
-name: CI
+name: CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   tests:
-    name: Local tests
+    name: Test locally
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -16,10 +16,10 @@ jobs:
           token: ${{ secrets.REPO_TOKEN }}
 
       - name: Docker compose BUILD
-        run: docker-compose --file docker-compose.production.yml build --no-cache
+        run: docker-compose -f docker-compose.production.yml build
 
       - name: Docker compose UP
-        run: docker-compose --file docker-compose.production.yml up --force-recreate -d
+        run: docker-compose -f docker-compose.production.yml up -d
 
   deploy:
     name: Deploy to production
@@ -35,13 +35,10 @@ jobs:
           username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
           key: ${{ secrets.PRODUCTION_VPS_KEY }}
           script: |
-            mkdir chat-app
             cd chat-app
-            git clone --recurse-submodules -j8 git@github.com:mszan/chat-app.git repo
-            rsync -av repo/ app
-            cd app
-            docker-compose --file docker-compose.production.yml stop
+            git pull origin master
+            git submodule update --recursive --remote
+            docker-compose -f docker-compose.production.yml stop
             docker system prune --force
-            docker-compose --file docker-compose.production.yml build --no-cache
-            docker-compose --file docker-compose.production.yml up --force-recreate -d
-            sudo rm ../repo -rd
+            docker-compose -f docker-compose.production.yml build
+            docker-compose -f docker-compose.production.yml up -d
