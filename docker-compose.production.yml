@@ -4,7 +4,7 @@ services:
     restart: always
     image: "postgres:13-alpine"
     environment:
-      - POSTGRES_PASSWORD=${SERVICE_POSTGRES_PASSWORD}
+      POSTGRES_PASSWORD: ${SERVICE_POSTGRES_PASSWORD}
     volumes:
       - ${SERVICE_POSTGRES_DATA_LOC}:/var/lib/postgresql/data
     ports:
