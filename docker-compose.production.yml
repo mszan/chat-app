@@ -11,8 +11,8 @@ services:
       - ${SERVICE_POSTGRES_PORT}:6379
     healthcheck:
       test: "pg_isready -U postgres"
-      timeout: 5s
-      retries: 3
+      timeout: 30s
+      retries: 30
 
   redis:
     container_name: chat-app_redis
@@ -23,7 +23,7 @@ services:
     healthcheck:
       test: "redis-cli ping"
       interval: 1s
-      timeout: 3s
+      timeout: 30s
       retries: 30
 
   backend:
