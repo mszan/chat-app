@@ -4,11 +4,11 @@ services:
     restart: always
     image: "postgres:13-alpine"
     environment:
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=${SERVICE_POSTGRES_PASSWORD}
     volumes:
-      - /var/docker/chat-app/postgres/data:/var/lib/postgresql/data
+      - ${SERVICE_POSTGRES_DATA_LOC}:/var/lib/postgresql/data
     ports:
-      - 4003:5432
+      - ${SERVICE_POSTGRES_PORT}:6379
     healthcheck:
       test: "pg_isready -U postgres"
       timeout: 5s
@@ -19,7 +19,7 @@ services:
     restart: always
     image: "redis:5-alpine"
     ports:
-      - 4002:6379
+      - ${SERVICE_REDIS_PORT}:6379
     healthcheck:
       test: "redis-cli ping"
       interval: 1s
@@ -36,7 +36,7 @@ services:
     environment:
       DJANGO_SETTINGS_MODULE: src.settings.production
     ports:
-      - 4001:8000
+      - ${SERVICE_BACKEND_PORT}:8000
     depends_on:
       postgres:
         condition: service_healthy
@@ -49,11 +49,11 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile.production
+      args:
+        REACT_APP_BACKEND_WEBSOCKET_URL: ${SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL}
+        REACT_APP_BACKEND_API_URL: ${SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL}
     command: serve -s build -l 3000
-    environment:
-      - REACT_APP_BACKEND_WEBSOCKET_URL=ws://chat-app.mszanowski.pl:8443/ws/
-      - REACT_APP_BACKEND_API_URL=https://chat-app.mszanowski.pl:8443/api
     ports:
-      - 4000:3000
+      - ${SERVICE_FRONTEND_PORT}:3000
     depends_on:
       - backend
