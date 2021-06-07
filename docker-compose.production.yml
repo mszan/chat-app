@@ -1,3 +1,5 @@
+version: "3"
+
 services:
   postgres:
     container_name: chat-app_postgres
@@ -9,10 +11,10 @@ services:
       - ${SERVICE_POSTGRES_DATA_LOC}:/var/lib/postgresql/data
     ports:
       - ${SERVICE_POSTGRES_PORT}:6379
-    healthcheck:
-      test: "pg_isready -U postgres"
-      timeout: 30s
-      retries: 30
+    # healthcheck:
+    #   test: "pg_isready -U postgres"
+    #   timeout: 30s
+    #   retries: 30
 
   redis:
     container_name: chat-app_redis
@@ -20,11 +22,11 @@ services:
     image: "redis:5-alpine"
     ports:
       - ${SERVICE_REDIS_PORT}:6379
-    healthcheck:
-      test: "redis-cli ping"
-      interval: 1s
-      timeout: 30s
-      retries: 30
+    # healthcheck:
+    #   test: "redis-cli ping"
+    #   interval: 1s
+    #   timeout: 30s
+    #   retries: 30
 
   backend:
     container_name: chat-app_backend
@@ -38,10 +40,12 @@ services:
     ports:
       - ${SERVICE_BACKEND_PORT}:8000
     depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+      - postgres
+      - redis
+      # postgres:
+      #   condition: service_healthy
+      # redis:
+      #   condition: service_healthy
 
   frontend:
     container_name: chat-app_frontend

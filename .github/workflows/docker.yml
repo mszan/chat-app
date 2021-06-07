@@ -37,3 +37,36 @@ jobs:
           SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL: http://localhost:4001/api
           SERVICE_FRONTEND_PORT: 5000
         run: docker-compose -f docker-compose.production.yml up -d
+
+  # deploy:
+  #   name: Deploy to production
+  #   runs-on: ubuntu-latest
+  #   needs: tests
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - name: Execute remote SSH commands
+  #       uses: appleboy/ssh-action@master
+  #       env:
+  #         SERVICE_POSTGRES_PASSWORD: ${{ secrets.PRODUCTION_SERVICE_POSTGRES_PASSWORD }}
+  #         SERVICE_POSTGRES_DATA_LOC: ${{ secrets.PRODUCTION_SERVICE_POSTGRES_DATA_LOC }}
+  #         SERVICE_POSTGRES_PORT: ${{ secrets.PRODUCTION_SERVICE_POSTGRES_PORT }}
+  #         SERVICE_REDIS_PORT: ${{ secrets.PRODUCTION_SERVICE_REDIS_PORT }}
+  #         SERVICE_BACKEND_PORT: ${{ secrets.PRODUCTION_SERVICE_BACKEND_PORT }}
+  #         SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL: ${{ secrets.PRODUCTION_SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL }}
+  #         SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL: ${{ secrets.PRODUCTION_SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL }}
+  #         SERVICE_FRONTEND_PORT: ${{ secrets.PRODUCTION_SERVICE_FRONTEND_PORT }}
+  #       with:
+  #         host: ${{ secrets.PRODUCTION_VPS_HOST }}
+  #         username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
+  #         key: ${{ secrets.PRODUCTION_VPS_KEY }}
+  #         command_timeout: 30m
+  #         envs: SERVICE_FRONTEND_PORT,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL,SERVICE_BACKEND_PORT,SERVICE_REDIS_PORT,SERVICE_POSTGRES_PORT,SERVICE_POSTGRES_DATA_LOC,ERVICE_POSTGRES_PASSWORD
+  #         script: |
+  #           cd chat-app
+  #           git pull origin master
+  #           git submodule update --recursive --remote
+  #           docker-compose -f docker-compose.production.yml stop
+  #           docker system prune --force
+  #           docker-compose -f docker-compose.production.yml build
+  #           docker-compose -f docker-compose.production.yml up -d
