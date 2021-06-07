@@ -17,7 +17,7 @@ jobs:
       - name: Docker compose BUILD
         env:
           SERVICE_POSTGRES_PASSWORD: password
-          SERVICE_POSTGRES_DATA_LOC: .
+          # SERVICE_POSTGRES_DATA_LOC: .
           SERVICE_POSTGRES_PORT: 5003
           SERVICE_REDIS_PORT: 5002
           SERVICE_BACKEND_PORT: 5001
@@ -29,7 +29,7 @@ jobs:
       - name: Docker compose UP
         env:
           SERVICE_POSTGRES_PASSWORD: password
-          SERVICE_POSTGRES_DATA_LOC: .
+          # SERVICE_POSTGRES_DATA_LOC: .
           SERVICE_POSTGRES_PORT: 5003
           SERVICE_REDIS_PORT: 5002
           SERVICE_BACKEND_PORT: 5001
