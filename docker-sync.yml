@@ -14,4 +14,4 @@ syncs:
 
   frontend-files:
     src: './frontend'
-    sync_excludes: [ '.gitignore', '.github', '.idea', 'Dockerfile.*', '.dockerignore', 'node_modules' ]
+    sync_excludes: ['.gitignore', '.github', '.idea', 'Dockerfile.*', '.dockerignore', 'node_modules']
