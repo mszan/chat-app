@@ -25,9 +25,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.production
+      args:
+        DJANGO_SETTINGS_MODULE: ${SERVICE_BACKEND_DJANGO_SETTINGS_MODULE}
+        DJANGO_SECRET_KEY: ${SERVICE_BACKEND_DJANGO_SECRET_KEY}
+        DJANGO_DB_PASSWORD: ${SERVICE_POSTGRES_PASSWORD}
     command: python manage.py runserver 0.0.0.0:8000
-    environment:
-      DJANGO_SETTINGS_MODULE: src.settings.production
     ports:
       - ${SERVICE_BACKEND_PORT}:8000
     depends_on:
