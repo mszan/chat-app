@@ -76,3 +76,4 @@ jobs:
             docker system prune --force
             docker-compose -f docker-compose.production.yml build --no-cache
             docker-compose -f docker-compose.production.yml up --force-recreate -d
+            
