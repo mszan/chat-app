@@ -67,7 +67,7 @@ jobs:
           username: ${{ secrets.PRODUCTION_VPS_USERNAME }}
           key: ${{ secrets.PRODUCTION_VPS_KEY }}
           command_timeout: 30m
-          envs: SERVICE_FRONTEND_PORT,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL,SERVICE_BACKEND_PORT,SERVICE_REDIS_PORT,SERVICE_POSTGRES_PORT,SERVICE_POSTGRES_DATA_LOC,ERVICE_POSTGRES_PASSWORD
+          envs: SERVICE_FRONTEND_PORT,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_API_URL,SERVICE_FRONTEND_ARG_REACT_APP_BACKEND_WEBSOCKET_URL,SERVICE_BACKEND_DJANGO_SECRET_KEY,SERVICE_BACKEND_DJANGO_SETTINGS_MODULE,SERVICE_BACKEND_PORT,SERVICE_REDIS_PORT,SERVICE_POSTGRES_PORT,SERVICE_POSTGRES_DATA_LOC,ERVICE_POSTGRES_PASSWORD
           script: |
             cd chat-app
             git pull origin master
@@ -76,4 +76,3 @@ jobs:
             docker system prune --force
             docker-compose -f docker-compose.production.yml build --no-cache
             docker-compose -f docker-compose.production.yml up --force-recreate -d
-            
