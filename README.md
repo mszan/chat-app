@@ -7,9 +7,6 @@ This is a dockerized real-time web chat app built with ReactJS, Django Rest Fram
 
 In details, [backend](https://github.com/mszan/chat-backend) is built on top of [Django](https://www.djangoproject.com/) and uses: [Django Rest Framework](https://www.django-rest-framework.org/), [Django Channels](https://channels.readthedocs.io/en/stable/), [Postgres](https://www.postgresql.org/). [Frontend](https://github.com/mszan/chat-frontend) is built on top of [ReactJS](https://reactjs.org/) and uses [Ant Design](https://ant.design/) as its main component library.
 
-## Live demo
-Live demo is available at [chat-app.mszanowski.pl](https://chat-app.mszanowski.pl).
-
 ## Usage
 ### Development
 This setup is ready for developing inside [VSCode Dev Container](https://code.visualstudio.com/docs/remote/containers).
